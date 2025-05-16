@@ -12,7 +12,7 @@ import { debounceTime, map, Observable, startWith, Subject } from "rxjs";
 export class ProfileComponent implements OnInit {
     data: IProfile[];
     filteredData$!: Observable<IProfile[]>;
-    searchTerm: string = 'qwerty';
+    searchTerm: string = '';
     public _searchTerm$ = new Subject<string>();
 
     constructor(private _profileService: ProfileService, private _router: Router) {
