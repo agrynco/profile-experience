@@ -1,0 +1,71 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-subtitle">Login to continue to your assessment platform</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email" 
+          placeholder="you@example.com"
+          [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].invalid }"
+        >
+        <div *ngIf="f['email'].touched && f['email'].errors" class="error-message">
+          <span *ngIf="f['email'].errors['required']">Email is required</span>
+          <span *ngIf="f['email'].errors['email']">Please enter a valid email address</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="password-header">
+          <label for="password">Password</label>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password"
+          placeholder="Enter your password" 
+          [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid }"
+        >
+        <div *ngIf="f['password'].touched && f['password'].errors" class="error-message">
+          <span *ngIf="f['password'].errors['required']">Password is required</span>
+          <span *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</span>
+        </div>
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger mt-3">
+        {{ error }}
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn-submit" [disabled]="loginForm.invalid || loading">
+          <span *ngIf="!loading">Log In</span>
+          <div *ngIf="loading" class="loader"></div>
+        </button>
+      </div>
+
+      <div class="auth-separator">
+        <span>Demo Accounts</span>
+      </div>
+
+      <div class="demo-accounts">
+        <div class="demo-account">
+          <p><strong>Candidate:</strong> candidate@example.com / password</p>
+        </div>
+        <div class="demo-account">
+          <p><strong>Admin:</strong> admin@example.com / password</p>
+        </div>
+      </div>
+    </form>
+
+    <div class="auth-footer">
+      <p>Don't have an account? <a routerLink="/register">Create one</a></p>
+    </div>
+  </div>
+</div>

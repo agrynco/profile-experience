@@ -1,0 +1,30 @@
+﻿<div style="max-width: 600px; margin: 0 auto;">
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+
+        <div style="display: flex; justify-content: space-between;">
+            <label style="width: 150px;">Organization Name:</label>
+            <input type="text" [(ngModel)]="profile.organizationName" style="flex: 1;" />
+        </div>
+
+        <div style="display: flex; justify-content: space-between;">
+            <label style="width: 150px;">Date From:</label>
+            <input type="date" [(ngModel)]="profile.dateFrom" style="flex: 1;" />
+        </div>
+
+        <div style="display: flex; justify-content: space-between;">
+            <label style="width: 150px;">Date To:</label>
+            <input type="date" [(ngModel)]="profile.dateTo" style="flex: 1;" />
+        </div>
+
+        <div style="display: flex; justify-content: space-between;">
+            <label style="width: 150px;">Summary:</label>
+            <input type="text" [(ngModel)]="profile.summary" style="flex: 1;" />
+        </div>
+
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 20px; gap: 10px;">
+        <button (click)="addNewRecord()">Save</button>
+        <button (click)="cancel()">Cancel</button>
+    </div>
+</div>

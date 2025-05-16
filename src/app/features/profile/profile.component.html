@@ -1,0 +1,32 @@
+<div>
+    <h2>Profile</h2>
+    <!-- Profile content will go here -->
+    <h3>Experiences</h3>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <button (click)="addNewRecord()">Add new record</button>
+        
+        <input type="text"
+               [(ngModel)]="searchTerm"
+               (ngModelChange)="_searchTerm$.next($event)"
+               style="width: 300px;" />
+    </div>
+
+    <table class="table">
+        <thead>
+        <th>Organization</th>
+        <th>Experience</th>
+        <th>Date From</th>
+        <th>Date To</th>
+        <th>Summary</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of filteredData$ | async">
+            <td>{{ item.organizationName }}</td>
+            <td>{{ getExperience(item) }}</td>
+            <td>{{ item.dateFrom | date : 'MM/dd/yyyy' }}</td>
+            <td>{{ item.dateTo | date : 'MM/dd/yyyy' }}</td>
+            <td>{{ item.summary }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

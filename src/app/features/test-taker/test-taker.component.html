@@ -1,0 +1,172 @@
+<div class="container">
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loader"></div>
+    <p>Loading test...</p>
+  </div>
+  
+  <div *ngIf="!isLoading && errorMessage" class="error-container">
+    <div class="error-card">
+      <h2>Error</h2>
+      <p>{{ errorMessage }}</p>
+      <button routerLink="/tests" class="btn-primary">Back to Tests</button>
+    </div>
+  </div>
+  
+  <div *ngIf="!isLoading && !errorMessage" class="test-container">
+    <!-- Test Introduction Screen -->
+    <div *ngIf="!testStarted" class="test-intro-card">
+      <h1>{{ test.title }}</h1>
+      <div class="test-meta">
+        <div class="test-meta-item">
+          <span class="meta-label">Duration:</span>
+          <span class="meta-value">{{ test.duration }} minutes</span>
+        </div>
+        <div class="test-meta-item">
+          <span class="meta-label">Questions:</span>
+          <span class="meta-value">{{ test.questions.length }}</span>
+        </div>
+        <div class="test-meta-item">
+          <span class="meta-label">Passing Score:</span>
+          <span class="meta-value">{{ test.passingScore }}%</span>
+        </div>
+        <div class="test-meta-item">
+          <span class="meta-label">Difficulty:</span>
+          <span class="meta-value difficulty" [ngClass]="test.difficulty">
+            {{ test.difficulty | titlecase }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="test-description">
+        <h3>Description</h3>
+        <p>{{ test.description }}</p>
+      </div>
+      
+      <div class="test-instructions">
+        <h3>Instructions</h3>
+        <ul>
+          <li>Once you start the test, the timer will begin counting down.</li>
+          <li>You can navigate between questions using the next/previous buttons.</li>
+          <li>You can review and change your answers before submitting.</li>
+          <li>The test will be automatically submitted when the timer reaches zero.</li>
+          <li>Ensure you have a stable internet connection before starting.</li>
+        </ul>
+      </div>
+      
+      <div class="test-actions">
+        <button routerLink="/tests" class="btn-secondary">Cancel</button>
+        <button (click)="startTest()" class="btn-primary">Start Test</button>
+      </div>
+    </div>
+    
+    <!-- Test Taking Screen -->
+    <div *ngIf="testStarted && !testSubmitted" class="test-taking-container">
+      <div class="test-header">
+        <h2>{{ test.title }}</h2>
+        <div class="timer-container" [ngClass]="{'timer-warning': timeRemaining < 300}">
+          <span class="timer-label">Time Remaining:</span>
+          <span class="timer-value">{{ formatTime(timeRemaining) }}</span>
+        </div>
+      </div>
+      
+      <div class="test-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+        </div>
+        <div class="progress-text">
+          Question {{ currentQuestionIndex + 1 }} of {{ test.questions.length }}
+        </div>
+      </div>
+      
+      <div class="test-content">
+        <div class="question-nav">
+          <div class="question-nav-header">
+            <h3>Questions</h3>
+          </div>
+          <div class="question-nav-list">
+            <button 
+              *ngFor="let question of test.questions; let i = index" 
+              class="question-nav-item" 
+              [ngClass]="{
+                'active': currentQuestionIndex === i,
+                'answered': isAnswered(question.id)
+              }"
+              (click)="navigateToQuestion(i)"
+            >
+              {{ i + 1 }}
+            </button>
+          </div>
+        </div>
+        
+        <div class="question-container">
+          <div class="question-card">
+            <div class="question-header">
+              <div class="question-type" [ngClass]="currentQuestion.type">
+                {{ currentQuestion.type | titlecase }}
+              </div>
+              <div class="question-points">
+                {{ currentQuestion.points }} {{ currentQuestion.points === 1 ? 'point' : 'points' }}
+              </div>
+            </div>
+            
+            <div class="question-content">
+              <h3>{{ currentQuestion.text }}</h3>
+              
+              <!-- Multiple Choice Question -->
+              <app-multiple-choice-question 
+                *ngIf="currentQuestion.type === 'multiple-choice' || currentQuestion.type === 'true-false'"
+                [question]="currentQuestion"
+                [existingAnswer]="answers.get(currentQuestion.id)"
+                (answerChanged)="updateAnswer($event)"
+              ></app-multiple-choice-question>
+              
+              <!-- Coding Question -->
+              <app-coding-question
+                *ngIf="currentQuestion.type === 'coding'"
+                [question]="currentQuestion"
+                [existingAnswer]="answers.get(currentQuestion.id)"
+                (answerChanged)="updateAnswer($event)"
+              ></app-coding-question>
+            </div>
+            
+            <div class="question-actions">
+              <button 
+                *ngIf="currentQuestionIndex > 0" 
+                (click)="previousQuestion()" 
+                class="btn-secondary"
+              >
+                Previous
+              </button>
+              <button 
+                *ngIf="currentQuestionIndex < test.questions.length - 1" 
+                (click)="nextQuestion()" 
+                class="btn-primary"
+              >
+                Next
+              </button>
+              <button 
+                *ngIf="currentQuestionIndex === test.questions.length - 1" 
+                (click)="onSubmitConfirm()" 
+                class="btn-success"
+              >
+                Submit Test
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div *ngIf="showConfirmModal" class="modal-overlay">
+      <div class="modal-content">
+        <h3>Confirm Submission</h3>
+        <p>{{ confirmationMessage }}</p>
+        <div class="modal-actions">
+          <button (click)="closeConfirmModal()" class="btn-secondary">Cancel</button>
+          <button (click)="confirmationAction()" class="btn-primary">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

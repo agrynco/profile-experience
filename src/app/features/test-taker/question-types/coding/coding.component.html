@@ -1,0 +1,41 @@
+<div class="coding-container">
+  <div class="coding-language">
+    <span>Language: <strong>{{ question.codeLanguage }}</strong></span>
+  </div>
+  
+  <div class="code-editor">
+    <textarea 
+      class="code-textarea"
+      [value]="codeAnswer"
+      (input)="onCodeChange($event)"
+      spellcheck="false"
+      wrap="off"
+    ></textarea>
+  </div>
+  
+  <div class="test-cases-section">
+    <button (click)="toggleTestCases()" class="btn-secondary test-cases-toggle">
+      {{ showTestCases ? 'Hide' : 'Show' }} Test Cases
+    </button>
+    
+    <div *ngIf="showTestCases && getVisibleTestCases().length > 0" class="test-cases-container">
+      <div *ngFor="let testCase of getVisibleTestCases(); let i = index" class="test-case">
+        <div class="test-case-header">Test Case #{{ i + 1 }}</div>
+        <div class="test-case-content">
+          <div class="test-case-input">
+            <strong>Input:</strong>
+            <pre>{{ testCase.input }}</pre>
+          </div>
+          <div class="test-case-output">
+            <strong>Expected Output:</strong>
+            <pre>{{ testCase.expectedOutput }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="showTestCases && getVisibleTestCases().length === 0" class="test-cases-empty">
+      <p>No visible test cases available for this question.</p>
+    </div>
+  </div>
+</div>

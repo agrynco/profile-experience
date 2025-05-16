@@ -1,0 +1,13 @@
+<div class="options-container">
+  <div 
+    *ngFor="let option of question.options" 
+    class="option-item" 
+    [class.selected]="isSelected(option.id)"
+    (click)="toggleOption(option.id)"
+  >
+    <div class="option-checkbox" [class.selected]="isSelected(option.id)">
+      <div class="option-checkbox-inner" *ngIf="isSelected(option.id)"></div>
+    </div>
+    <div class="option-text">{{ option.text }}</div>
+  </div>
+</div>

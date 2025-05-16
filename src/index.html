@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Candidate Assessment Platform</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A professional assessment platform for evaluating candidates"
+    />
+    <base href="/" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <app-root>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          flex-direction: column;
+        "
+      >
+        <div
+          style="
+            border: 3px solid rgba(10, 132, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #0a84ff;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s ease-in-out infinite;
+          "
+        ></div>
+        <p
+          style="
+            margin-top: 16px;
+            color: #8e8e93;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+              sans-serif;
+          "
+        >
+          Loading assessment platform...
+        </p>
+      </div>
+      <style>
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
+    </app-root>
+  </body>
+</html>

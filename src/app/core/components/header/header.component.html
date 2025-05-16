@@ -1,0 +1,39 @@
+<header class="header" [class.scrolled]="isScrolled">
+  <div class="container header-container">
+    <div class="header-logo">
+      <a routerLink="/">
+        <h1>CAP<span class="logo-accent">.</span></h1>
+      </a>
+    </div>
+    
+    <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
+      <span [class.open]="isMenuOpen"></span>
+    </button>
+    
+    <nav class="main-nav" [class.open]="isMenuOpen">
+      <ul>
+        <li *ngIf="authService.isLoggedIn()">
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li *ngIf="authService.isLoggedIn()">
+          <a routerLink="/tests" routerLinkActive="active">Tests</a>
+        </li>
+        <li *ngIf="authService.isLoggedIn() && authService.isAdmin()">
+          <a routerLink="/admin" routerLinkActive="active">Admin</a>
+        </li>
+        <li *ngIf="!authService.isLoggedIn()">
+          <a routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li *ngIf="!authService.isLoggedIn()">
+          <a routerLink="/register" routerLinkActive="active" class="btn-signup">Sign Up</a>
+        </li>
+        <li *ngIf="authService.isLoggedIn()" class="profile-menu">
+          <a routerLink="/profile" routerLinkActive="active">Profile</a>
+        </li>
+        <li *ngIf="authService.isLoggedIn()">
+          <button class="btn-logout" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
