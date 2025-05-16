@@ -1,6 +1,7 @@
 ﻿# Angular Demo App (Dockerized)
 
-This project contains an Angular frontend app (`demo`) packaged into a production-ready Docker image using Nginx as a web server.
+This project contains an Angular frontend app (`demo`) packaged into a production-ready Docker image using Nginx as a
+web server.
 
 ## 📦 Build the Docker Image
 
@@ -9,6 +10,7 @@ This project contains an Angular frontend app (`demo`) packaged into a productio
 ```
 
 This will:
+
 - Use Node to install dependencies and build the Angular app (in production mode)
 - Use Nginx to serve the compiled static files
 
@@ -24,7 +26,7 @@ Visit: [http://localhost:8080](http://localhost:8080)
 
 ```
 .
-├── src/                      # Angular source code
+├── src/                     # Angular source code
 ├── dist/demo/               # Compiled output after build
 ├── nginx.conf               # Custom Nginx config
 ├── Dockerfile               # Multi-stage Docker build
